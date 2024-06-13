@@ -87,11 +87,4 @@ resource "aws_eks_node_group" "private-nodes" {
     max_size     = 2
     min_size     = 1
   }
-
-  update_config {
-    max_unavailable = 1
-  }
-
-  labels = {
-    role = "general"
   }
