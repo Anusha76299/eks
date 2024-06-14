@@ -52,8 +52,6 @@ resource "aws_subnet" "public-us-east-1b" {
 
   tags = {
     "Name"                       = "public-us-east-1b"
-    "kubernetes.io/role/elb"     = "1"
-    "kubernetes.io/cluster/demo" = "owned"
   }
 }
 
@@ -81,31 +79,19 @@ resource "aws_nat_gateway" "nat" {
 resource "aws_route_table" "private" {
   vpc_id = aws_vpc.main.id
 
-  route = [
-    {
+  route = {
       cidr_block                 = "0.0.0.0/0"
       nat_gateway_id             = aws_nat_gateway.nat.id
-    },
-  ]
-
-  tags = {
-    Name = "private"
-  }
+    }
 }
 
   resource "aws_route_table" "public" {
   vpc_id = aws_vpc.main.id
 
-  route = [
-    {
+  route = {
       cidr_block                 = "0.0.0.0/0"
       gateway_id                 = aws_internet_gateway.igw.id
-    },
-  ]
-
-  tags = {
-    Name = "public"
-  }
+    }
 }
 
 resource "aws_route_table_association" "private-us-east-1a" {
