@@ -23,12 +23,6 @@ resource "aws_instance" "bookstack_instance" {
   key_name      = "ec2-demo" # Specify your SSH key pair name
   security_groups = ["${aws_security_group.bookstack_sg.name}"]  
 
-  provisioner "local-exec" {
-    command = <<EOT
-      echo "${aws_instance.bookstack_instance.private_ip}" > instance_ip.txt
-    EOT
-  }
-
   user_data = <<-EOF
     #!/bin/bash
     sudo yum update -y
@@ -43,6 +37,10 @@ resource "aws_instance" "bookstack_instance" {
   EOF
 
 }
+
+output "instance_ips" {
+    value = aws_instance.bookstack_instance.private_ip
+  }
 
 resource "aws_eip" "bookstack_eip" {
   instance = aws_instance.bookstack_instance.id
