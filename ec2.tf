@@ -28,18 +28,15 @@ resource "aws_instance" "bookstack_instance" {
     sudo groupadd docker
     sudo usermod -aG docker $USER
     sudo reboot
+    sudo curl -L https://github.com/docker/compose/releases/latest/download/docker-compose-$(uname -s)-$(uname -m) -o /usr/local/bin/docker-compose
+    sudo chmod +x /usr/local/bin/docker-compose
+    mkdir ~/bookstack
+    echo '${file("docker-compose.yml")}' > ~/bookstack/docker-compose.yml
+    cd ~/bookstack && sudo docker-compose up -d
   EOF
 
   provisioner "remote-exec" {
-    inline = [
-      "sudo curl -L https://github.com/docker/compose/releases/latest/download/docker-compose-$(uname -s)-$(uname -m) -o /usr/local/bin/docker-compose",
-      "sudo chmod +x /usr/local/bin/docker-compose",
-      "mkdir ~/bookstack",
-      # Here you can copy your docker-compose.yml file content to the instance
-      "echo '${file("docker-compose.yml")}' > ~/bookstack/docker-compose.yml",
-      # Optionally, you might want to run docker-compose up here to start BookStack immediately
-      "cd ~/bookstack && sudo docker-compose up -d"
-    ]
+    inline = []
 
     connection {
       type        = "ssh"
