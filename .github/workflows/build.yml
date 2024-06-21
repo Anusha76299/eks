@@ -60,4 +60,4 @@ jobs:
         run: |
          chmod 600 ./ec2-demo.pem
          instance_ips=${{ steps.terraform_outputs.outputs.instance_ips }}
-         scp -o StrictHostKeyChecking=no -i ./ec2-demo.pem docker-compose.yml ec2-user@${instance_ips}:~/bookstack/docker-compose.yml
+         sudo scp -o StrictHostKeyChecking=no -i ./ec2-demo.pem docker-compose.yml ec2-user@${instance_ips}:~/bookstack/docker-compose.yml
