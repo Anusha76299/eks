@@ -39,12 +39,17 @@ jobs:
         run: exit 1
 
       - name: Terraform Apply
-        id: terraform_outputs
         if: github.ref == 'refs/heads/main' && github.event_name == 'push'
         run: |
          terraform apply -auto-approve  
-         echo "::set-output name=instance_ips::$(terraform output -raw instance_ips)"
-
+         
+      - name: Get Terraform Outputs
+        id: terraform_outputs
+        run: |
+         instance_ips=$(terraform output -raw instance_ips)
+         echo "::set-output name=instance_ips::$instance_ips"
+         echo $instance_ips
+         
       - name: Download PEM file from S3
         env:
             BUCKET: ${{ secrets.BUCKET }} 
