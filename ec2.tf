@@ -54,10 +54,6 @@ resource "aws_eip" "bookstack_eip" {
   instance = aws_instance.bookstack_instance.id
 }
 
-provider "aws" {
-  region = "us-east-1"  # Specify your AWS region here
-}
-
 resource "aws_security_group" "bookstack_sg" {
   name        = "bookstack-sg"
   description = "Security group for Bookstack application"
