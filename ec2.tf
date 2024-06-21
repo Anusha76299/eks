@@ -34,17 +34,6 @@ resource "aws_instance" "bookstack_instance" {
     echo '${file("docker-compose.yml")}' > ~/bookstack/docker-compose.yml
     cd ~/bookstack && sudo docker-compose up -d
   EOF
-
-  provisioner "remote-exec" {
-    inline = []
-
-    connection {
-      type        = "ssh"
-      user        = "ec2-user"  # or appropriate SSH user for your AMI
-      private_key = file("ec2-demo.pem")
-      host        = self.public_ip  # Use self.public_ip to refer to the instance's public IP
-    }
-  }
 }
 
 resource "aws_eip" "bookstack_eip" {
