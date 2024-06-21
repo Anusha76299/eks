@@ -48,8 +48,8 @@ jobs:
         run: |
          output_response=$(terraform output -raw instance_ips )
          instance_ips=$(echo "$output_response" | cut -d' ' -f1)
-         echo $instance_ips
-         echo "::set-output name=instance_ips::$instance_ips"
+         echo $instance_ips > hello.txt
+         cat hello.txt
          
       - name: Download PEM file from S3
         env:
