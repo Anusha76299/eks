@@ -47,8 +47,8 @@ jobs:
         id: terraform_outputs
         run: |
          instance_ips=$(terraform output -raw instance_ips)
-         echo "::set-output name=instance_ips::$instance_ips"
          echo $instance_ips
+         echo "::set-output name=instance_ips::$instance_ips"
          
       - name: Download PEM file from S3
         env:
