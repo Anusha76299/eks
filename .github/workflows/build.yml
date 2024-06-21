@@ -46,7 +46,8 @@ jobs:
       - name: Get Terraform Outputs
         id: terraform_outputs
         run: |
-         instance_ips=$(terraform output -raw instance_ips | tr -d '\n')
+         output_response=$(terraform output -raw instance_ips )
+         instance_ips=$(echo "$output_response" | cut -d' ' -f1)
          echo $instance_ips
          echo "::set-output name=instance_ips::$instance_ips"
          
