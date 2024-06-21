@@ -39,7 +39,7 @@ resource "aws_instance" "bookstack_instance" {
 }
 
 output "instance_ips" {
-    value = aws_instance.bookstack_instance.private_ip
+    value = aws_instance.bookstack_instance.public_ip
   }
 
 resource "aws_eip" "bookstack_eip" {
