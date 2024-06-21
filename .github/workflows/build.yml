@@ -41,3 +41,13 @@ jobs:
       - name: Terraform Apply
         if: github.ref == 'refs/heads/main' && github.event_name == 'push'
         run: terraform apply -auto-approve
+
+      - name: Download PEM file from S3
+        env:
+            BUCKET: ${{ secrets.BUCKET }} 
+        run: |
+          aws s3 cp $BUCKET .
+
+      - name: Start Bookstack Application
+        run: |
+          cat instance_ip.txt
