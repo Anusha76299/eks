@@ -61,3 +61,6 @@ jobs:
          chmod 600 ./ec2-demo.pem
          instance_ips=${{ steps.terraform_outputs.outputs.instance_ips }}
          sudo scp -v -o StrictHostKeyChecking=no -i ./ec2-demo.pem ./docker-compose.yml ec2-user@${instance_ips}:/home/ec2-user/bookstack/docker-compose.yml
+         ssh -o StrictHostKeyChecking=no -i ./ec2-demo.pem  ec2-user@${instance_ips} "
+         cd ~/bookstack && docker-compose up -d
+         "
