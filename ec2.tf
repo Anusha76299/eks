@@ -16,7 +16,7 @@
 resource "aws_instance" "bookstack_instance" {
   ami           = "ami-08a0d1e16fc3f61ea"  # Specify your desired AMI
   instance_type = "t2.micro"          # Adjust instance type as needed
-  key_name      = "mykey" # Specify your SSH key pair name
+  key_name      = "ec2-demo" # Specify your SSH key pair name
   security_groups = ["${aws_security_group.bookstack_sg.id}"]  # Ensure this security group allows inbound on port 8080
 
   user_data = <<-EOF
@@ -44,7 +44,7 @@ resource "aws_instance" "bookstack_instance" {
     connection {
       type        = "ssh"
       user        = "ec2-user"  # or appropriate SSH user for your AMI
-      private_key = file("mykey.pem")
+      private_key = file("ec2-demo.pem")
       host        = self.public_ip  # Use self.public_ip to refer to the instance's public IP
     }
   }
