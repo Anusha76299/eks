@@ -19,6 +19,8 @@ jobs:
         
       - name: Setup Terraform
         uses: hashicorp/setup-terraform@v1
+        with:
+           terraform_wrapper: false
  
       - name: Terraform Init
         id: init
@@ -46,10 +48,7 @@ jobs:
       - name: Get Terraform Outputs
         id: terraform_outputs
         run: |
-         output_response=$(terraform output -raw instance_ips )
-         instance_ips=$(echo "$output_response" | cut -d' ' -f1)
-         echo $instance_ips > hello.txt
-         cat hello.txt
+         echo "instance_ips=$(echo "$(terraform output -raw instance_ips )" | cut -d' ' -f1)" >> $GITHUB_OUTPUT
          
       - name: Download PEM file from S3
         env:
