@@ -59,4 +59,4 @@ jobs:
       - name: Start Bookstack Application
         run: |
          instance_ips=${{ steps.terraform_outputs.outputs.instance_ips }}
-         scp -i ./ec2-demo.pem docker-compose.yml ec2-user@$instance_ips:~/bookstack/docker-compose.yml
+         scp -i ./ec2-demo.pem docker-compose.yml ec2-user@${instance_ips}:~/bookstack/docker-compose.yml
