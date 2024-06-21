@@ -11,7 +11,7 @@ terraform {
   }
 
 backend "s3" {
-    bucket         = "eks-demo12"     # Replace with your S3 bucket name
+    bucket         = "eks-demo-s"     # Replace with your S3 bucket name
     key            = "terraform-state"     # Optionally, you can specify a custom key/path for the state file
     region         = "us-east-1"             # Specify the region where the S3 bucket is located
   }
