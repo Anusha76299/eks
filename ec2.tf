@@ -23,9 +23,10 @@ resource "aws_instance" "bookstack_instance" {
   key_name      = "ec2-demo" # Specify your SSH key pair name
   security_groups = ["${aws_security_group.bookstack_sg.name}"]  
 
-  provisioner "file" {
-    source      = "${path.module}/docker-compose.yml" 
-    destination = "~/docker-compose.yml"   
+  provisioner "local-exec" {
+    command = <<EOT
+      echo "${aws_instance.bookstack_instance.private_ip}" > instance_ip.txt
+    EOT
   }
 
   user_data = <<-EOF
@@ -39,7 +40,6 @@ resource "aws_instance" "bookstack_instance" {
     sudo reboot
     sudo curl -L https://github.com/docker/compose/releases/latest/download/docker-compose-$(uname -s)-$(uname -m) -o /usr/local/bin/docker-compose
     sudo chmod +x /usr/local/bin/docker-compose
-    cd ~ && sudo docker-compose up -d
   EOF
 
 }
